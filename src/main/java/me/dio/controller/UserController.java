@@ -1,10 +1,7 @@
 package me.dio.controller;
 
-import me.dio.domain.model.Card;
 import me.dio.domain.model.User;
-import me.dio.service.CardService;
 import me.dio.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
