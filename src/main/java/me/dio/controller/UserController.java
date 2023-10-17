@@ -16,8 +16,6 @@ import java.net.URI;
 public class UserController {
 
     private final UserService userService;
-    @Autowired
-    private CardService cardService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -37,10 +35,5 @@ public class UserController {
                 .buildAndExpand(userCreated.getId())
                 .toUri();
         return ResponseEntity.created(location).body(userCreated);
-    }
-
-    @PostMapping("/inativacard")
-    public void inativarCartao(){
-        cardService.inativarCard();
     }
 }
