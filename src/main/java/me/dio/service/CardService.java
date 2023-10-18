@@ -2,7 +2,6 @@ package me.dio.service;
 
 import me.dio.domain.model.Card;
 import me.dio.domain.model.TypeCard;
-import me.dio.domain.model.User;
 import me.dio.domain.repository.CardRepository;
 import me.dio.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +41,10 @@ public class CardService {
             if (type.equals(TypeCard.FISICO)) {
                 LocalDateTime expireDateTime = now.plusYears(3).withHour(23).withMinute(59).withSecond(59);
                 card.setDateHourExpire(expireDateTime);
-                if (type.equals(TypeCard.VIRTUAL)) {
-                    Duration oneHour = Duration.ofHours(1);
-                    LocalDateTime expireTime = now.plus(oneHour);
-                    card.setDateHourExpire(expireTime);
-                }
+            } else if (type.equals(TypeCard.VIRTUAL)) {
+                Duration oneHour = Duration.ofHours(1);
+                LocalDateTime expireTime = now.plus(oneHour);
+                card.setDateHourExpire(expireTime);
             }
             try{
                 return cardRepository.save(card);
