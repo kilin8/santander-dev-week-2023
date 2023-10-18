@@ -15,8 +15,8 @@ public class ScheduleTask {
     private CardService cardService;
 
     @Scheduled(fixedDelay = MINUTO)
-    public void inativarCard() {
-        System.out.println("Rotina de inativar cartões expirados!");
-        cardService.inativarCard();
+    public void desactivateCard() {
+        System.out.println("Expired card deactivation routine");
+        cardService.desactivateCard();
     }
 }

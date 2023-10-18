@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.Duration;
+import java.util.Random;
 
 @Entity(name = "tb_card")
 public class Card {
@@ -20,10 +22,42 @@ public class Card {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private TipoCartao type;
+    private TypeCard type;
 
     @Column(name = "expire")
     private LocalDateTime dateHourExpire;
+
+    public Card(TypeCard type){
+        LocalDateTime now = LocalDateTime.now();
+        this.number = generateRandomNumber();
+        this.ative = true;
+        this.type = type;
+        switch (type){
+            case VIRTUAL:
+                Duration oneHour = Duration.ofHours(1);
+                LocalDateTime expireTime = now.plus(oneHour);
+                this.dateHourExpire = expireTime;
+            case FISICO:
+                LocalDateTime expireDateTime = now.plusYears(3).withHour(23).withMinute(59).withSecond(59);
+                this.dateHourExpire = expireDateTime;
+        }
+        Random random = new Random();
+        int randomValue = random.nextInt(10001);
+        this.limit = BigDecimal.valueOf(randomValue);
+    }
+    public Card() {}
+
+    public String generateRandomNumber() {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 16; i++) {
+            if (i > 0 && i % 4 == 0) {
+                sb.append(" ");
+            }
+            sb.append(random.nextInt(10));
+        }
+        return sb.toString();
+    }
 
     public LocalDateTime getDateHourExpire() {
         return dateHourExpire;
@@ -44,11 +78,11 @@ public class Card {
     @Column(name = "ative")
     private boolean ative;
 
-    public TipoCartao getType() {
+    public TypeCard getType() {
         return type;
     }
 
-    public void setType(TipoCartao type) {
+    public void setType(TypeCard type) {
         this.type = type;
     }
 

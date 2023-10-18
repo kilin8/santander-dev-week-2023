@@ -1,7 +1,9 @@
 package me.dio.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "tb_user")
@@ -16,14 +18,25 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     private Account account;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Card card;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Card> card;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Feature> features;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<News> news;
+
+    public User(@JsonProperty("name") String name, @JsonProperty("balance") int balance) {
+        this.name = name;
+        this.account = new Account(balance);
+        List<Card> cards = new ArrayList<>();
+        Card card = new Card(TypeCard.FISICO);
+        cards.add(card);
+        this.card = cards;
+    }
+
+    public User(){}
 
     public Long getId() {
         return id;
@@ -49,11 +62,11 @@ public class User {
         this.account = account;
     }
 
-    public Card getCard() {
+    public List<Card> getCard() {
         return card;
     }
 
-    public void setCard(Card card) {
+    public void setCard(List<Card> card) {
         this.card = card;
     }
 

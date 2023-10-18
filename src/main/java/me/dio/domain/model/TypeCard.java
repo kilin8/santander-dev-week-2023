@@ -1,6 +1,6 @@
 package me.dio.domain.model;
 
-public enum TipoCartao {
+public enum TypeCard {
     FISICO,
     VIRTUAL;
 }
