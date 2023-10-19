@@ -2,6 +2,8 @@
 
 Java RESTful API criada para a Santander Dev Week.
 
+Criei lógica para existir os tipos de cartões fisicos e virtuais, e também para haver data de validade, onde uma rotina verifica a cada minuto se a validade do cartão for menor que a data atual, desativando-o caso precise, a validade do cartão fisíco após criado é de 3 anos, para cartões virtuais 1 hora.
+
 ## Principais Tecnologias
  - **Java 17**: Utilizaremos a versão LTS mais recente do Java para tirar vantagem das últimas inovações que essa linguagem robusta e amplamente utilizada oferece;
  - **Spring Boot 3**: Trabalharemos com a mais nova versão do Spring Boot, que maximiza a produtividade do desenvolvedor por meio de sua poderosa premissa de autoconfiguração;
@@ -17,40 +19,52 @@ O Figma foi utilizado para a abstração do domínio desta API, sendo útil na a
 
 ```mermaid
 classDiagram
-  class User {
-    -String name
-    -Account account
-    -Feature[] features
-    -Card card
-    -News[] news
-  }
+    class User {
+        -id: int
+        -name: string
+        -account: Account
+        -card: Card[]
+        -features: Feature[]
+        -news: News[]
+    }
 
-  class Account {
-    -String number
-    -String agency
-    -Number balance
-    -Number limit
-  }
+    class Account {
+        -id: int
+        -number: string
+        -agency: string
+        -balance: double
+        -limit: double
+    }
 
-  class Feature {
-    -String icon
-    -String description
-  }
+    class Card {
+        -id: int
+        -number: string
+        -limit: double
+        -type: TypeCard
+        -dateHourExpire: string
+        -ative: boolean
+    }
 
-  class Card {
-    -String number
-    -Number limit
-  }
+    class Feature {
+        -icon: string
+        -description: string
+    }
 
-  class News {
-    -String icon
-    -String description
-  }
+    class News {
+        -icon: string
+        -description: string
+    }
+
+    class TypeCard {
+        PHYSICAL
+        VIRTUAL
+    }
 
   User "1" *-- "1" Account
   User "1" *-- "N" Feature
-  User "1" *-- "1" Card
+  User "1" *-- "N" Card
   User "1" *-- "N" News
+  Card "1" *-- "1" TypeCard
 ```
 
 ## IMPORTANTE
