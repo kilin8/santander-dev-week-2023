@@ -37,7 +37,7 @@ public class Card {
                 Duration oneHour = Duration.ofHours(1);
                 LocalDateTime expireTime = now.plus(oneHour);
                 this.dateHourExpire = expireTime;
-            case FISICO:
+            case PHYSICAL:
                 LocalDateTime expireDateTime = now.plusYears(3).withHour(23).withMinute(59).withSecond(59);
                 this.dateHourExpire = expireDateTime;
         }

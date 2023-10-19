@@ -18,7 +18,7 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     private Account account;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Card> card;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -31,7 +31,7 @@ public class User {
         this.name = name;
         this.account = new Account(balance);
         List<Card> cards = new ArrayList<>();
-        Card card = new Card(TypeCard.FISICO);
+        Card card = new Card(TypeCard.PHYSICAL);
         cards.add(card);
         this.card = cards;
     }

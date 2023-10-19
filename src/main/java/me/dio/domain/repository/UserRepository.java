@@ -13,6 +13,4 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByAccountNumber(String accountNumber);
-    @Query("SELECT c FROM User u WHERE u.id = :id AND c.type = :type AND c.active = true")
-    Card findActiveCardByUserIdAndType(Long id, TypeCard type);
 }

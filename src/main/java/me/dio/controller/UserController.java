@@ -1,6 +1,7 @@
 package me.dio.controller;
 
 import me.dio.domain.model.User;
+import me.dio.domain.model.dto.UserDTO;
 import me.dio.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody User userToCreate) {
-        var userCreated = userService.create(userToCreate);
+    public ResponseEntity<User> create(@RequestBody UserDTO userToCreate) {
+        User user = new User(userToCreate.getName(), userToCreate.getBalance());
+        var userCreated = userService.create(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(userCreated.getId())
